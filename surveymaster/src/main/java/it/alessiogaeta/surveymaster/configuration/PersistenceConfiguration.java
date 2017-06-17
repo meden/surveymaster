@@ -1,11 +1,17 @@
 package it.alessiogaeta.surveymaster.configuration;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.Properties;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
+import org.eclipse.persistence.config.PersistenceUnitProperties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -39,7 +45,8 @@ public class PersistenceConfiguration {
 	}
 
 	@Bean
-	LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource) {
+	LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource)
+	        throws FileNotFoundException, URISyntaxException {
 		LOGGER.info("Init EntityManagerFactory");
 
 		final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
@@ -48,11 +55,17 @@ public class PersistenceConfiguration {
 		entityManagerFactoryBean.setPackagesToScan("it.alessiogaeta.surveymaster.model");
 
 		final Properties jpaProperties = new Properties();
-		jpaProperties.put("eclipselink.target-database", "org.eclipse.persistence.platform.database.H2Platform");
-		jpaProperties.put("eclipselink.ddl-generation", "create-tables");
-		jpaProperties.put("eclipselink.ddl-generation.output-mode", "database");
-		jpaProperties.put("eclipselink.weaving", "false");
-		jpaProperties.put("eclipselink.logging.level", "FINE");
+		jpaProperties.put(PersistenceUnitProperties.TARGET_DATABASE,
+		        "org.eclipse.persistence.platform.database.H2Platform");
+		jpaProperties.put(PersistenceUnitProperties.SCHEMA_GENERATION_DATABASE_ACTION, "create");
+		jpaProperties.put(PersistenceUnitProperties.WEAVING, "false");
+		jpaProperties.put(PersistenceUnitProperties.LOGGING_LEVEL, "FINE");
+
+		// Populate DB
+		final URI scriptUri = getClass().getResource("/data.sql").toURI();
+		jpaProperties.put(PersistenceUnitProperties.SCHEMA_GENERATION_SQL_LOAD_SCRIPT_SOURCE,
+		        new FileReader(new File(scriptUri)));
+
 		entityManagerFactoryBean.setJpaProperties(jpaProperties);
 
 		return entityManagerFactoryBean;
