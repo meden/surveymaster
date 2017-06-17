@@ -2,6 +2,7 @@ package it.alessiogaeta.surveymaster.ws.resources;
 
 import java.util.Collection;
 
+import javax.ws.rs.BeanParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.Path;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 
 import it.alessiogaeta.surveymaster.dao.SurveysRepository;
 import it.alessiogaeta.surveymaster.model.Survey;
+import it.alessiogaeta.surveymaster.model.SurveyTemplate;
 
 @Controller
 @Path("/surveys")
@@ -30,7 +32,7 @@ public class SurveysResource {
 	String subjectId;
 
 	@GET
-	public Response getAll() {
+	public Response getAll(@BeanParam SurveyTemplate template) throws IllegalArgumentException, IllegalAccessException {
 		try {
 			Collection<Survey> list = null;
 			if (providerId != null) {
@@ -42,7 +44,7 @@ public class SurveysResource {
 				list = repository.findBySubject_Id(Long.parseLong(subjectId));
 
 			} else {
-				list = repository.findAll();
+				list = repository.findAll(template.getQuerySpecifications());
 			}
 
 			if (list != null) {
@@ -78,4 +80,5 @@ public class SurveysResource {
 			throw new NotFoundException();
 		}
 	}
+
 }
