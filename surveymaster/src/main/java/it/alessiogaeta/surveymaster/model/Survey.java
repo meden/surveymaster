@@ -27,10 +27,10 @@ public class Survey implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	Long id;
 
-	@ManyToOne
+	@ManyToOne(optional = false)
 	Provider provider;
 
-	@ManyToOne
+	@ManyToOne(optional = false)
 	Subject subject;
 
 	@Column(nullable = false)
