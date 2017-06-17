@@ -38,4 +38,9 @@ public class ProvidersResource {
 
 		return Response.ok(entity).build();
 	}
+
+	@Path("/{providerId}/surveys")
+	public Class<SurveysResource> getSurveys() {
+		return SurveysResource.class;
+	}
 }

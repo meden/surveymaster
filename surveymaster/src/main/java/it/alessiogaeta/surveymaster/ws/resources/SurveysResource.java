@@ -1,5 +1,7 @@
 package it.alessiogaeta.surveymaster.ws.resources;
 
+import java.util.Collection;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.Path;
@@ -21,23 +23,59 @@ public class SurveysResource {
 	@Autowired
 	private SurveysRepository repository;
 
+	@PathParam("providerId")
+	String providerId;
+
+	@PathParam("subjectId")
+	String subjectId;
+
 	@GET
 	public Response getAll() {
-		return Response.ok(repository.findAll()).build();
+		try {
+			Collection<Survey> list = null;
+			if (providerId != null) {
+				// As Providers sub-resource
+				list = repository.findByProvider_Id(providerId);
+
+			} else if (subjectId != null) {
+				// As Subjects sub-resource
+				list = repository.findBySubject_Id(Long.parseLong(subjectId));
+
+			} else {
+				list = repository.findAll();
+			}
+
+			if (list != null) {
+				return Response.ok(list).build();
+
+			} else {
+				throw new NotFoundException();
+			}
+
+		} catch (final NumberFormatException e) {
+			throw new NotFoundException();
+		}
 	}
 
 	@GET
 	@Path("/{id}")
 	public Response getSurvey(@PathParam("id") String id) {
-		Survey item = null;
 		try {
-			item = repository.findOne(Long.parseLong(id));
-		} catch (final NumberFormatException e) {}
+			Survey item = null;
+			if (providerId == null && subjectId == null) {
+				// Specific survey can only be accessed directly
+				item = repository.findOne(Long.parseLong(id));
+			}
 
-		if (item == null) {
+			if (item != null) {
+				return Response.ok(item).build();
+
+			} else {
+				throw new NotFoundException();
+			}
+
+		} catch (final NumberFormatException e) {
 			throw new NotFoundException();
 		}
-
-		return Response.ok(item).build();
 	}
 }

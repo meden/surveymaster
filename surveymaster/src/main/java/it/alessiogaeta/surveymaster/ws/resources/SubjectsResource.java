@@ -40,4 +40,9 @@ public class SubjectsResource {
 
 		return Response.ok(entity).build();
 	}
+
+	@Path("/{subjectId}/surveys")
+	public Class<SurveysResource> getSurveys() {
+		return SurveysResource.class;
+	}
 }
