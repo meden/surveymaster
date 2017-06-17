@@ -11,10 +11,10 @@
 
 	<properties>
 		<servlet.version>3.0</servlet.version>
-		<springframework.version>4.2.8.RELEASE</springframework.version>
+		<springframework.version>4.3.4.RELEASE</springframework.version>
 		<springframework.data.version>2.5.4.RELEASE</springframework.data.version>
 		<springframework.jpa.version>1.10.4.RELEASE</springframework.jpa.version>
-		<jersey.version>2.25.1</jersey.version>
+		<jersey.version>2.26-b06</jersey.version>
 		<jackson.version>2.8.4</jackson.version>
 		<slf4j.version>1.7.21</slf4j.version>
 		<log4j.version>1.2.17</log4j.version>
@@ -39,18 +39,6 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.0.1</version>
 			<scope>provided</scope>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-			<exclusions>
-				<!-- Using log4j -->
-				<exclusion>
-					<groupId>commons-logging</groupId>
-					<artifactId>commons-logging</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 
 		<!-- DBMS -->
@@ -92,22 +80,8 @@
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jersey.ext</groupId>
-			<artifactId>jersey-spring3</artifactId>
+			<artifactId>jersey-spring4</artifactId>
 			<version>${jersey.version}</version>
-			<exclusions>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-core</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-web</artifactId>
-				</exclusion>
-				<exclusion>
-					<groupId>org.springframework</groupId>
-					<artifactId>spring-beans</artifactId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 
 		<!-- Logging -->
