@@ -2,6 +2,7 @@ package it.alessiogaeta.surveymaster.model;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -30,9 +31,10 @@ public class SearchSubscription implements Serializable {
 
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "requesterid", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(nullable = false, insertable = false, updatable = false)
 	private Requester requester;
 
+	@Column(name = "requester_id")
 	private Long requesterId;
 
 	@Embedded

@@ -20,7 +20,7 @@ public class Requester implements Serializable {
 
 	@Id
 	@OneToMany(targetEntity = SearchSubscription.class)
-	private Long requesterId;
+	private Long id;
 
 	@Column(nullable = false)
 	private String name;
@@ -38,12 +38,12 @@ public class Requester implements Serializable {
 		super();
 	}
 
-	public Long getRequesterId() {
-		return this.requesterId;
+	public Long getId() {
+		return this.id;
 	}
 
-	public void setRequesterId(Long requesterId) {
-		this.requesterId = requesterId;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getName() {

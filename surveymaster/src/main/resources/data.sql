@@ -17,7 +17,7 @@ insert into surveys (ID, PROVIDER_ID, SUBJECT_ID, AGEMAX, AGEMIN, COUNTRY, GENDE
 insert into surveys (ID, PROVIDER_ID, SUBJECT_ID, AGEMAX, AGEMIN, COUNTRY, GENDER, INCOMECURRENCY, INCOMEMAX, INCOMEMIN, PRICE) values (33, 'PR3', 1, 70, 20, 'IT', 'F', 'EUR', 150000, 18000,15000);
 insert into surveys (ID, PROVIDER_ID, SUBJECT_ID, AGEMAX, AGEMIN, COUNTRY, GENDER, INCOMECURRENCY, INCOMEMAX, INCOMEMIN, PRICE) values (34, 'PR3', 1, 70, 20, 'IT', 'F', 'EUR', 150000, 18000,15000);
 
-insert into requesters (REQUESTERID, NAME, ADDRESS, API, EMAIL, FTP) values (1, 'Requester 1', 'Main Plaza, Gotham City', 'https://wayne.com/api/surveys', 'bm@wayne.com', 'ftp://wayne.com/cave');
+insert into requesters (ID, NAME, ADDRESS, API, EMAIL, FTP) values (1, 'Requester 1', 'Main Plaza, Gotham City', 'https://wayne.com/api/surveys', 'bm@wayne.com', 'ftp://wayne.com/cave');
 
-insert into search_subscriptions (ID, REQUESTERID, CHANNELS, FREQUENCY, AGEMAX, AGEMIN, COUNTRIES, GENDER, INCOMECURRENCIES, INCOMEMAX, INCOMEMIN, PROVIDERS, SUBJECTS ) values(-1, 1, 'api, mail', 'weekly', '45', NULL, 'it,es', 'M', 'EUR', NULL, 20000, NULL, '1,2');
-insert into search_subscriptions (ID, REQUESTERID, CHANNELS, FREQUENCY, AGEMAX, AGEMIN, COUNTRIES, GENDER, INCOMECURRENCIES, INCOMEMAX, INCOMEMIN, PROVIDERS, SUBJECTS ) values(-2, 1, 'api, MAIL', 'monthly', NULL, NULL, 'it', NULL, 'EUR', NULL, NULL, NULL, '3');
+insert into search_subscriptions (ID, REQUESTER_ID, CHANNELS, FREQUENCY, AGEMAX, AGEMIN, COUNTRIES, GENDER, INCOMECURRENCIES, INCOMEMAX, INCOMEMIN, PROVIDERS, SUBJECTS ) values(-1, 1, 'api, mail', 'weekly', '45', NULL, 'it,es', 'M', 'EUR', NULL, 20000, NULL, '1,2');
+insert into search_subscriptions (ID, REQUESTER_ID, CHANNELS, FREQUENCY, AGEMAX, AGEMIN, COUNTRIES, GENDER, INCOMECURRENCIES, INCOMEMAX, INCOMEMIN, PROVIDERS, SUBJECTS ) values(-2, 1, 'api, MAIL', 'monthly', NULL, NULL, 'it', NULL, 'EUR', NULL, NULL, NULL, '3');
