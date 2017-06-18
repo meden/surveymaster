@@ -1,0 +1,313 @@
+{
+	"variables": [],
+	"info": {
+		"name": "SurveyMaster",
+		"_postman_id": "b664c3aa-f724-9c70-a7e4-52900c6477cc",
+		"description": "This collection shows the API for exploring and ordering available surveys.\n\nThe Acurrent implementation assumes that the client is correctly authenticated and all resources are filtered according to his access rights.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "orders",
+			"description": "The `orders` resource exposes orders placed by the authenticated **Requester**.",
+			"item": [
+				{
+					"name": "/orders",
+					"request": {
+						"url": "http://localhost:8080/surveymaster/a/orders",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "Returns all order placed by a **Requester**."
+					},
+					"response": []
+				},
+				{
+					"name": "/orders",
+					"request": {
+						"url": "http://localhost:8080/surveymaster/a/orders",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"surveyId\": 31\n}"
+						},
+						"description": "Allows to place an order.\n\nThe API expects an `Application/json` body. As the only property that makes sense to specify to place an order is the survey id, the new order entity can be created POSTing an object like:\n\n\t{\n\t  \"surveyId\": <number>\n\t}\n\nIf creation is succesful, the Http code `201 Create` is returned, along with the new resource URL as `Location` header."
+					},
+					"response": []
+				},
+				{
+					"name": "/orders/:id",
+					"request": {
+						"url": "http://localhost:8080/surveymaster/a/orders/1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "Returns the order with the specified `id`."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "providers",
+			"description": "The `providers` resource exposes registered survey providers.",
+			"item": [
+				{
+					"name": "/providers",
+					"request": {
+						"url": "http://localhost:8080/surveymaster/a/providers",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "Returns all **Providers** registered in the system."
+					},
+					"response": []
+				},
+				{
+					"name": "/providers/:id",
+					"request": {
+						"url": "http://localhost:8080/surveymaster/a/providers/PR1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "Returns the provider with the specified `id`."
+					},
+					"response": []
+				},
+				{
+					"name": "/providers/:id/surveys",
+					"request": {
+						"url": "http://localhost:8080/surveymaster/a/providers/PR1/surveys",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "Returns all surveys produced by the **Provider** specified `id`."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "subjects",
+			"description": "The `subjects` resource exposes registered survey subjects.",
+			"item": [
+				{
+					"name": "/subjects",
+					"request": {
+						"url": "http://localhost:8080/surveymaster/a/subjects",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "Returns all survey subjects registered in the system."
+					},
+					"response": []
+				},
+				{
+					"name": "/subjects/:id",
+					"request": {
+						"url": "http://localhost:8080/surveymaster/a/subjects/1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "Returns the subject with the specified `id`."
+					},
+					"response": []
+				},
+				{
+					"name": "/subjects/:id/surveys",
+					"request": {
+						"url": "http://localhost:8080/surveymaster/a/subjects/1/surveys",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "Returns all the surveys about the subject with the specified `id`."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "subscriptions",
+			"description": "The `subcriptions` resource exposes subscriptions made by the authenticated **Requester**.\n\nA subscription is a defined search on available surveys whose results are delivered to the subscriber via the chosen channel.",
+			"item": [
+				{
+					"name": "/subscriptions",
+					"request": {
+						"url": "http://localhost:8080/surveymaster/a/subscriptions",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "Returns all subscription made by a **Requester**."
+					},
+					"response": []
+				},
+				{
+					"name": "/subscriptions",
+					"request": {
+						"url": "http://localhost:8080/surveymaster/a/subscriptions",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"subscription\": {\n        \"frequency\": \"daily\",\n        \"channels\": [\n            \"api\",\n            \"mail\"\n        ]\n    },\n    \"template\": {\n        \"providers\": [],\n        \"subjects\": [\n            \"1\",\n            \"3\"\n        ],\n        \"gender\": \"B\",\n        \"ageMin\": null,\n        \"ageMax\": null,\n        \"incomeCurrencies\": [\n            \"EUR\",\n            \"CAD\"\n        ],\n        \"incomeMin\": 20000,\n        \"incomeMax\": null,\n        \"countries\": [\n            \"es\"\n        ],\n        \"priceMin\": null,\n        \"priceMax\": null\n    }\n}"
+						},
+						"description": "Allows to create a new subcription.\n\nThe entity is a `SurveyTemplate` which defines the search criteria of subscription."
+					},
+					"response": []
+				},
+				{
+					"name": "/subscriptions/:id",
+					"request": {
+						"url": "http://localhost:8080/surveymaster/a/subscriptions/1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "Returns the subscription with the specified `id`."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "surveys",
+			"description": "The `surveys` resource exposes the surveys available on the market.",
+			"item": [
+				{
+					"name": "/surveys?<search>",
+					"request": {
+						"url": {
+							"raw": "http://localhost:8080/surveymaster/a/surveys?providers=PR1,PR2&ageMin=20&incomeCurrencies=AUD,USD",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"surveymaster",
+								"a",
+								"surveys"
+							],
+							"query": [
+								{
+									"key": "providers",
+									"value": "PR1,PR2",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "subjects",
+									"value": "",
+									"type": "text",
+									"description": "",
+									"disabled": true
+								},
+								{
+									"key": "gender",
+									"value": "",
+									"type": "text",
+									"description": "",
+									"disabled": true
+								},
+								{
+									"key": "ageMin",
+									"value": "20",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "ageMax",
+									"value": "",
+									"type": "text",
+									"description": "",
+									"disabled": true
+								},
+								{
+									"key": "incomeCurrencies",
+									"value": "AUD,USD",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "incomeMin",
+									"value": "",
+									"type": "text",
+									"description": "",
+									"disabled": true
+								},
+								{
+									"key": "incomeMax",
+									"value": "",
+									"type": "text",
+									"description": "",
+									"disabled": true
+								},
+								{
+									"key": "countries",
+									"value": "",
+									"type": "text",
+									"description": "",
+									"disabled": true
+								},
+								{
+									"key": "priceMin",
+									"value": "",
+									"type": "text",
+									"description": "",
+									"disabled": true
+								},
+								{
+									"key": "priceMax",
+									"value": "",
+									"type": "text",
+									"description": "",
+									"disabled": true
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "Allows to search surveys using search criteria.\n\nAvailable critera are:\n* providers (csv)\n* subjects (csv)\n* gender\n* ageMin\n* ageMax\n* incomeCurrencies (csv)\n* incomeMin\n* incomeMax\n* countries (csv)\n* priceMin\n* priceMax\n\nAll criteria are to be specified in querystring. The critera marked with 'csv' are multi-valued and can be specified as comma separated values."
+					},
+					"response": []
+				},
+				{
+					"name": "/surveys",
+					"request": {
+						"url": "http://localhost:8080/surveymaster/a/surveys",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "Returns all surveys available."
+					},
+					"response": []
+				},
+				{
+					"name": "/surveys/:id",
+					"request": {
+						"url": "http://localhost:8080/surveymaster/a/surveys/11",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "Returns the survey with the specified `id`."
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
