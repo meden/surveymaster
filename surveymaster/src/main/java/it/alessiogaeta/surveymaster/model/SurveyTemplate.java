@@ -16,6 +16,7 @@ import javax.ws.rs.QueryParam;
 import org.springframework.data.jpa.domain.Specifications;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import it.alessiogaeta.surveymaster.model.converters.StringCollectionToStringConverter;
 
@@ -64,10 +65,16 @@ public class SurveyTemplate implements Serializable {
 	}
 
 	@QueryParam("providers")
+	@JsonIgnore
 	public void setProviders(String providers) {
 		if (providers != null) {
 			this.providers = new HashSet<>(Arrays.asList(providers.split(",")));
 		}
+	}
+
+	@JsonDeserialize(as = HashSet.class)
+	public void setProviders(HashSet<String> providers) {
+		this.providers = providers;
 	}
 
 	public Collection<String> getSubjects() {
@@ -75,10 +82,16 @@ public class SurveyTemplate implements Serializable {
 	}
 
 	@QueryParam("subjects")
+	@JsonIgnore
 	public void setSubjects(String subjects) {
 		if (subjects != null) {
 			this.subjects = new HashSet<>(Arrays.asList(subjects.split(",")));
 		}
+	}
+
+	@JsonDeserialize(as = HashSet.class)
+	public void setSubjects(HashSet<String> subjects) {
+		this.subjects = subjects;
 	}
 
 	public String getGender() {
@@ -110,10 +123,16 @@ public class SurveyTemplate implements Serializable {
 	}
 
 	@QueryParam("incomeCurrencies")
+	@JsonIgnore
 	public void setIncomeCurrencies(String incomeCurrencies) {
 		if (incomeCurrencies != null) {
 			this.incomeCurrencies = new HashSet<>(Arrays.asList(incomeCurrencies.split(",")));
 		}
+	}
+
+	@JsonDeserialize(as = HashSet.class)
+	public void setIncomeCurrencies(HashSet<String> incomeCurrencies) {
+		this.incomeCurrencies = incomeCurrencies;
 	}
 
 	public Integer getIncomeMin() {
@@ -137,10 +156,16 @@ public class SurveyTemplate implements Serializable {
 	}
 
 	@QueryParam("countries")
+	@JsonIgnore
 	public void setCountries(String countries) {
 		if (countries != null) {
 			this.countries = new HashSet<>(Arrays.asList(countries.split(",")));
 		}
+	}
+
+	@JsonDeserialize(as = HashSet.class)
+	public void setCountries(HashSet<String> countries) {
+		this.countries = countries;
 	}
 
 	public BigDecimal getPriceMin() {
