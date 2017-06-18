@@ -52,7 +52,9 @@ public class PersistenceConfiguration {
 		final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
 		entityManagerFactoryBean.setDataSource(dataSource);
 		entityManagerFactoryBean.setJpaVendorAdapter(new EclipseLinkJpaVendorAdapter());
-		entityManagerFactoryBean.setPackagesToScan("it.alessiogaeta.surveymaster.model");
+		entityManagerFactoryBean.setPackagesToScan(
+		        "it.alessiogaeta.surveymaster.model",
+		        "it.alessiogaeta.surveymaster.dao");
 
 		final Properties jpaProperties = new Properties();
 		jpaProperties.put(PersistenceUnitProperties.TARGET_DATABASE,

@@ -4,21 +4,31 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
+import javax.persistence.Convert;
+import javax.persistence.Embeddable;
+import javax.persistence.Transient;
 import javax.ws.rs.QueryParam;
 
 import org.springframework.data.jpa.domain.Specifications;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import it.alessiogaeta.surveymaster.model.converters.StringCollectionToStringConverter;
+
+@Embeddable
 public class SurveyTemplate implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Set<String> providers;
+	@Convert(converter = StringCollectionToStringConverter.class)
+	private Collection<String> providers;
 
-	private Set<String> subjects;
+	@Convert(converter = StringCollectionToStringConverter.class)
+	private Collection<String> subjects;
 
 	@QueryParam("gender")
 	private String gender;
@@ -29,7 +39,8 @@ public class SurveyTemplate implements Serializable {
 	@QueryParam("ageMax")
 	private Integer ageMax;
 
-	private Set<String> incomeCurrencies;
+	@Convert(converter = StringCollectionToStringConverter.class)
+	private Collection<String> incomeCurrencies;
 
 	@QueryParam("incomeMin")
 	private Integer incomeMin;
@@ -37,15 +48,18 @@ public class SurveyTemplate implements Serializable {
 	@QueryParam("incomeMax")
 	private Integer incomeMax;
 
-	private Set<String> countries;
+	@Convert(converter = StringCollectionToStringConverter.class)
+	private Collection<String> countries;
 
+	@Transient
 	@QueryParam("priceMin")
 	private BigDecimal priceMin;
 
+	@Transient
 	@QueryParam("priceMax")
 	private BigDecimal priceMax;
 
-	public Set<String> getProviders() {
+	public Collection<String> getProviders() {
 		return providers;
 	}
 
@@ -56,7 +70,7 @@ public class SurveyTemplate implements Serializable {
 		}
 	}
 
-	public Set<String> getSubjects() {
+	public Collection<String> getSubjects() {
 		return subjects;
 	}
 
@@ -91,7 +105,7 @@ public class SurveyTemplate implements Serializable {
 		this.ageMax = ageMax;
 	}
 
-	public Set<String> getIncomeCurrencies() {
+	public Collection<String> getIncomeCurrencies() {
 		return incomeCurrencies;
 	}
 
@@ -118,7 +132,7 @@ public class SurveyTemplate implements Serializable {
 		this.incomeMax = incomeMax;
 	}
 
-	public Set<String> getCountries() {
+	public Collection<String> getCountries() {
 		return countries;
 	}
 
@@ -145,6 +159,7 @@ public class SurveyTemplate implements Serializable {
 		this.priceMax = priceMax;
 	}
 
+	@JsonIgnore
 	public Specifications<Survey> getQuerySpecifications()
 	        throws IllegalArgumentException, IllegalAccessException {
 
