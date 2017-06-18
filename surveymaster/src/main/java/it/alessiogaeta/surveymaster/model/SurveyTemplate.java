@@ -16,8 +16,6 @@ public class SurveyTemplate implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
-
 	private Set<String> providers;
 
 	private Set<String> subjects;
@@ -46,14 +44,6 @@ public class SurveyTemplate implements Serializable {
 
 	@QueryParam("priceMax")
 	private BigDecimal priceMax;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	public Set<String> getProviders() {
 		return providers;
@@ -160,9 +150,6 @@ public class SurveyTemplate implements Serializable {
 
 		// TODO (Alessio): user reflection (and eventually generics)
 		final List<SurveySpecification> surveySpecs = new ArrayList<>();
-		if (this.id != null) {
-			surveySpecs.add(new SurveySpecification(new SearchCriterion("id", ":", this.id)));
-		}
 		if (this.providers != null) {
 			surveySpecs.add(new SurveySpecification(new SearchCriterion("provider", "|", this.providers)));
 		}
