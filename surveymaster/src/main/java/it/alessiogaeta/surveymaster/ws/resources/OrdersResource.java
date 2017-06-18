@@ -18,13 +18,13 @@ import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import it.alessiogaeta.surveymaster.dao.SearchSubscriptionsRepository;
-import it.alessiogaeta.surveymaster.model.SearchSubscription;
+import it.alessiogaeta.surveymaster.dao.SurveyOrdersRepository;
+import it.alessiogaeta.surveymaster.model.SurveyOrder;
 
 @Controller
-@Path("/subscriptions")
+@Path("/orders")
 @Produces(MediaType.APPLICATION_JSON)
-public class SubscriptionsResource {
+public class OrdersResource {
 
 	/*
 	 * There should be an authorization mechanism that can inject the actual
@@ -37,7 +37,7 @@ public class SubscriptionsResource {
 	private HttpServletRequest request;
 
 	@Autowired
-	private SearchSubscriptionsRepository repository;
+	private SurveyOrdersRepository repository;
 
 	@GET
 	public Response getAll() throws IllegalArgumentException, IllegalAccessException {
@@ -46,17 +46,17 @@ public class SubscriptionsResource {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response create(SearchSubscription subscription) throws URISyntaxException {
-		subscription.setRequesterId(REQUESTER_ID);
-		subscription = repository.save(subscription);
+	public Response create(SurveyOrder order) throws URISyntaxException {
+		order.setRequesterId(REQUESTER_ID);
+		order = repository.save(order);
 
-		return Response.created(getResourceUri(subscription)).build();
+		return Response.created(getResourceUri(order)).build();
 	}
 
 	@GET
 	@Path("/{id}")
 	public Response getOne(@PathParam("id") String id) {
-		SearchSubscription item = null;
+		SurveyOrder item = null;
 		try {
 			item = repository.findOne(Long.parseLong(id));
 		} catch (final NumberFormatException e) {}
@@ -69,7 +69,7 @@ public class SubscriptionsResource {
 		}
 	}
 
-	private URI getResourceUri(SearchSubscription subscription) throws URISyntaxException {
+	private URI getResourceUri(SurveyOrder subscription) throws URISyntaxException {
 		return new URI(request.getRequestURL().append("/").append(subscription.getId()).toString());
 	}
 }

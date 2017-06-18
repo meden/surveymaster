@@ -21,3 +21,6 @@ insert into requesters (ID, NAME, ADDRESS, API, EMAIL, FTP) values (1, 'Requeste
 
 insert into search_subscriptions (ID, REQUESTER_ID, CHANNELS, FREQUENCY, AGEMAX, AGEMIN, COUNTRIES, GENDER, INCOMECURRENCIES, INCOMEMAX, INCOMEMIN, PROVIDERS, SUBJECTS ) values(-1, 1, 'api, mail', 'weekly', '45', NULL, 'it,es', 'M', 'EUR', NULL, 20000, NULL, '1,2');
 insert into search_subscriptions (ID, REQUESTER_ID, CHANNELS, FREQUENCY, AGEMAX, AGEMIN, COUNTRIES, GENDER, INCOMECURRENCIES, INCOMEMAX, INCOMEMIN, PROVIDERS, SUBJECTS ) values(-2, 1, 'api, MAIL', 'monthly', NULL, NULL, 'it', NULL, 'EUR', NULL, NULL, NULL, '3');
+
+insert into survey_orders (ID, REQUESTER_ID, SURVEY_ID ) values(-1, 1, 11);
+insert into survey_orders (ID, REQUESTER_ID, SURVEY_ID ) values(-2, 1, 31);
