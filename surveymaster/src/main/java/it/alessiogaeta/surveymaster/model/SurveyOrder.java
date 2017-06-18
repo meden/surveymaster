@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,6 +23,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name = "survey_orders")
 public class SurveyOrder implements Serializable {
+
+	public enum OrderStatus {
+		pending,
+		paid,
+		processing,
+		delivered
+	}
 
 	private static final long serialVersionUID = 1L;
 
@@ -41,6 +50,10 @@ public class SurveyOrder implements Serializable {
 
 	@Column(name = "survey_id")
 	private Long surveyId;
+
+	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
+	private OrderStatus status = OrderStatus.pending;
 
 	public SurveyOrder() {
 		super();
@@ -86,6 +99,14 @@ public class SurveyOrder implements Serializable {
 
 	public void setSurveyId(Long surveyId) {
 		this.surveyId = surveyId;
+	}
+
+	public OrderStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(OrderStatus status) {
+		this.status = status;
 	}
 
 }
