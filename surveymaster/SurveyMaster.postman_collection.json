@@ -36,7 +36,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"surveyId\": 31\n}"
+							"raw": "{\n\t\"surveyId\": 31,\n\t\"channel\": \"ftp\"\n}"
 						},
 						"description": "Allows to place an order.\n\nThe API expects an `Application/json` body. As the only property that makes sense to specify to place an order is the survey id, the new order entity can be created POSTing an object like:\n\n\t{\n\t  \"surveyId\": <number>\n\t}\n\nIf creation is succesful, the Http code `201 Create` is returned, along with the new resource URL as `Location` header."
 					},
@@ -50,6 +50,17 @@
 						"header": [],
 						"body": {},
 						"description": "Returns the order with the specified `id`."
+					},
+					"response": []
+				},
+				{
+					"name": "/orders/:id",
+					"request": {
+						"url": "http://localhost:8080/surveymaster/a/orders/-1",
+						"method": "DELETE",
+						"header": [],
+						"body": {},
+						"description": "Deletes the order with the specified `id`.\n\nAn order can be deleted only if it is in state `pending`."
 					},
 					"response": []
 				}
@@ -173,6 +184,17 @@
 					"request": {
 						"url": "http://localhost:8080/surveymaster/a/subscriptions/1",
 						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "Returns the subscription with the specified `id`."
+					},
+					"response": []
+				},
+				{
+					"name": "/subscriptions/:id",
+					"request": {
+						"url": "http://localhost:8080/surveymaster/a/subscriptions/1",
+						"method": "DELETE",
 						"header": [],
 						"body": {},
 						"description": "Returns the subscription with the specified `id`."
