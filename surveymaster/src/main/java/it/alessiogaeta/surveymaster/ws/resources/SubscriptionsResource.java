@@ -5,6 +5,7 @@ import java.net.URISyntaxException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
@@ -56,17 +57,30 @@ public class SubscriptionsResource {
 	@GET
 	@Path("/{id}")
 	public Response getOne(@PathParam("id") String id) {
+		final SearchSubscription item = loadSubscripion(id);
+
+		return Response.ok(item).build();
+	}
+
+	@DELETE
+	@Path("/{id}")
+	public Response delete(@PathParam("id") String id) {
+		final SearchSubscription item = loadSubscripion(id);
+
+		repository.delete(item.getId());
+
+		return Response.noContent().build();
+	}
+
+	private SearchSubscription loadSubscripion(String id) {
 		SearchSubscription item = null;
 		try {
 			item = repository.findOne(Long.parseLong(id));
 		} catch (final NumberFormatException e) {}
-
-		if (item != null) {
-			return Response.ok(item).build();
-
-		} else {
+		if (item == null) {
 			throw new NotFoundException();
 		}
+		return item;
 	}
 
 	private URI getResourceUri(SearchSubscription subscription) throws URISyntaxException {
