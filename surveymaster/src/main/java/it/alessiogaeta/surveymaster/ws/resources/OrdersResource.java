@@ -4,7 +4,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.BadRequestException;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.POST;
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Controller;
 
 import it.alessiogaeta.surveymaster.dao.SurveyOrdersRepository;
 import it.alessiogaeta.surveymaster.model.SurveyOrder;
+import it.alessiogaeta.surveymaster.model.SurveyOrder.OrderStatus;
 
 @Controller
 @Path("/orders")
@@ -56,20 +59,37 @@ public class OrdersResource {
 	@GET
 	@Path("/{id}")
 	public Response getOne(@PathParam("id") String id) {
-		SurveyOrder item = null;
-		try {
-			item = repository.findOne(Long.parseLong(id));
-		} catch (final NumberFormatException e) {}
+		final SurveyOrder item = loadOrder(id);
 
-		if (item != null) {
-			return Response.ok(item).build();
+		return Response.ok(item).build();
+	}
 
-		} else {
-			throw new NotFoundException();
+	@DELETE
+	@Path("/{id}")
+	public Response delete(@PathParam("id") String id) {
+		final SurveyOrder item = loadOrder(id);
+
+		if (!item.getStatus().equals(OrderStatus.pending)) {
+			throw new BadRequestException("too-late-mate");
 		}
+
+		repository.delete(item.getId());
+
+		return Response.noContent().build();
 	}
 
 	private URI getResourceUri(SurveyOrder subscription) throws URISyntaxException {
 		return new URI(request.getRequestURL().append("/").append(subscription.getId()).toString());
+	}
+
+	private SurveyOrder loadOrder(String id) {
+		SurveyOrder item = null;
+		try {
+			item = repository.findOne(Long.parseLong(id));
+		} catch (final NumberFormatException e) {}
+		if (item == null) {
+			throw new NotFoundException();
+		}
+		return item;
 	}
 }
