@@ -16,6 +16,8 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import it.alessiogaeta.surveymaster.model.Subscription.Channel;
+
 /**
  * Entity implementation class for Entity: SurveyOrder
  *
@@ -50,6 +52,10 @@ public class SurveyOrder implements Serializable {
 
 	@Column(name = "survey_id")
 	private Long surveyId;
+
+	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
+	private Channel channel;
 
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
@@ -99,6 +105,14 @@ public class SurveyOrder implements Serializable {
 
 	public void setSurveyId(Long surveyId) {
 		this.surveyId = surveyId;
+	}
+
+	public Channel getChannel() {
+		return channel;
+	}
+
+	public void setChannel(Channel channel) {
+		this.channel = channel;
 	}
 
 	public OrderStatus getStatus() {
